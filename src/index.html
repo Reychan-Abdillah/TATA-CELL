@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Form Pembelian</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom scrollbar for modern look */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f3f4f6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #6366f1; /* Indigo-500 */
+      border-radius: 10px;
+      border: 2px solid #f3f4f6;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 via-purple-50 to-pink-50 min-h-screen flex items-center justify-center p-4">
+  <main class="bg-white/90 backdrop-blur-md rounded-3xl shadow-xl max-w-lg w-full p-8 space-y-8">
+    <h1 class="text-3xl font-extrabold text-indigo-700 text-center mb-6">TATA CELL</h1>
+    <form id="purchaseForm" class="space-y-6">
+      <div>
+        <label for="name" class="block text-sm font-semibold text-gray-700 mb-1">Nama</label>
+        <input type="text" id="name" name="name" placeholder="Masukkan nama Anda" required
+          class="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" />
+      </div>
+
+      <div>
+        <label for="purchaseType" class="block text-sm font-semibold text-gray-700 mb-1">Pembelian</label>
+        <select id="purchaseType" name="purchaseType" required
+          class="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+          <option value="" disabled selected>Pilih jenis pembelian</option>
+          <option value="Pulsa">Pulsa</option>
+          <option value="Paket Internet">Paket Internet</option>
+          <option value="Transfer">Transfer</option>
+          <option value="DANA">DANA</option>
+          <option value="GoPay">GoPay</option>
+          <option value="Top-up Game">Top-up Game</option>
+          <option value="Bayar WiFi">Bayar WiFi</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="numberId" class="block text-sm font-semibold text-gray-700 mb-1">Nomor / ID</label>
+        <input type="text" id="numberId" name="numberId" placeholder="Masukkan nomor atau ID" required
+          class="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" />
+      </div>
+
+      <div>
+        <label for="amount" class="block text-sm font-semibold text-gray-700 mb-1">Nominal</label>
+        <input type="number" id="amount" name="amount" placeholder="Masukkan nominal" min="1" required
+          class="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" />
+      </div>
+
+      <button type="button" id="whatsappBtn"
+        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl shadow-md transition focus:outline-none focus:ring-4 focus:ring-indigo-300">
+        Kirim via WhatsApp
+      </button>
+    </form>
+
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+      <a href="https://wa.me/6281350942104?text=Halo,%20saya%20ingin%20bertanya%20tentang%20layanan" target="_blank" rel="noopener"
+        class="flex-1 text-center bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white font-semibold py-3 rounded-xl shadow-lg hover:brightness-110 transition">
+        Hubungi Owner
+      </a>
+      <button id="reportBtn"
+        class="flex-1 text-center border-2 border-indigo-600 text-indigo-600 font-semibold py-3 rounded-xl hover:bg-indigo-600 hover:text-white transition">
+        Laporkan Masalah
+      </button>
+    </div>
+  </main>
+
+  <script>
+    // Tombol WhatsApp
+    document.getElementById('whatsappBtn').addEventListener('click', function () {
+      const name = document.getElementById('name').value.trim();
+      const purchaseType = document.getElementById('purchaseType').value;
+      const numberId = document.getElementById('numberId').value.trim();
+      const amount = document.getElementById('amount').value;
+
+      // Validasi
+      if (!name || !purchaseType || !numberId || !amount) {
+        alert('Mohon lengkapi semua data sebelum mengirim.');
+        return;
+      }
+
+      // Format pesan WhatsApp
+      const message = `Halo! Saya ingin melakukan pembelian:
+
+📋 *DETAIL PEMBELIAN TATA CELL*
+• Nama: ${name}
+• Pembelian: ${purchaseType}
+• Nomor/ID: ${numberId}
+• Nominal: Rp ${amount}
+
+Silakan proses pembelian saya. Terima kasih!`;
+
+      // Encode pesan untuk URL
+      const encodedMessage = encodeURIComponent(message);
+      
+      // Nomor WhatsApp target (ganti dengan nomor Anda)
+      const phoneNumber = '6281350942104'; // Format internasional tanpa + dan 0
+      
+      // Redirect ke WhatsApp
+      window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+    });
+
+    // Tombol laporkan masalah
+    document.getElementById('reportBtn').addEventListener('click', () => {
+      const issue = prompt('Silakan jelaskan masalah yang Anda alami:');
+      if (issue) {
+        const encodedIssue = encodeURIComponent(`Laporan Masalah: ${issue}`);
+        window.open(`https://wa.me/6281350942104?text=${encodedIssue}`, '_blank');
+      }
+    });
+  </script>
+</body>
+</html>
+
+```
